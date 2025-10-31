@@ -86,8 +86,63 @@ console.log(reproductor.detener());
 console.log(reproductor.pausar());
 console.log(reproductor.pausar());
 
+// Ejercicio 4: Carrito de Compras con Descuentos
+function Carrito() {
+    this.productos = [];
+    this.total = 0;
+    this.agregarProducto = function (nombre, precio) {
+        let producto = {
+            nombre: nombre.toString(),
+            precio: parseInt(precio)
+        }
+        this.productos.push(producto);
+    }
+    this.calcularTotal = function () {
+        this.total = 0;
+        for (let i = 0; i < this.productos.length; i++) {
+            const producto = this.productos[i];
+            this.total += producto.precio;
+        }
+        console.log("$", this.total);
+        return `$ ${this.total}`
+    }
+    this.calcularDescuento = function () {
+        this.calcularTotal();
+        console.log("Su total es: $", this.total);
+        if (this.total > 100) {
+            // 10% de Descuento
+            console.log("Aplica 10% de descuento!");
+            this.total *= 0.9;
+            console.log("Su carrito con descuento queda en: $ ", this.total)
+            return `$ ${this.total}`;
+        }
+        else if (this.total > 50 && this.total < 101) {
+            // 5% de Descuento
+            console.log("Aplica 5% de descuento!");
+            this.total *= 0.95;
+            console.log("Su carrito con descuento queda en: $ ", this.total);
+            return `$ ${this.total}`;
+        }
+        else {
+            // No aplica Descuento
+            console.log("No Aplica descuento!");
+            console.log("Su carrito sin descuento queda en: $ ", this.total);
+            console.log("le faltan $", 50 - this.total, ". Para recibir un descuento del 5%");
+            return `$ ${this.total}`;
+        }
+    }    
+}
 
-
-
-
-
+const carrito = new Carrito();
+console.log("Carrito: ", carrito.productos);
+carrito.agregarProducto("Chocolate", 10);
+console.log("Total", carrito.calcularTotal());
+carrito.agregarProducto("Chocolate", 10);
+carrito.agregarProducto("Manzana", 10);
+carrito.agregarProducto("Peras", 14);
+console.log("Total", carrito.calcularTotal());
+console.log("Total Descuento", carrito.calcularDescuento());
+carrito.agregarProducto("Tv", 100);
+console.log("Total", carrito.calcularTotal());
+console.log("Total Descuento", carrito.calcularDescuento());
+console.log("Carrito: ", carrito.productos);
